@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Corner Box | Investment Grade Comics</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- BRAND KIT & RESET --- */
+        :root {
+            --bg-color: #F5F5F5;
+            --bg-secondary: #FAFAFA;
+            --text-color: #121212;
+            --accent-color: #B81D24; /* Vintage Marvel Red */
+            --white: #FFFFFF;
+            
+            --font-header: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- TYPOGRAPHY UTILS --- */
+        .serif-hd { font-family: var(--font-header); font-weight: 700; }
+        .uppercase-sub { text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
+        .text-center { text-align: center; }
+        .text-white { color: var(--white); }
+
+        /* --- 1. HEADER (STICKY) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: var(--font-header);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-area img { height: 40px; } /* Adjust based on your PNG files */
+
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
+        nav a:hover { color: var(--accent-color); }
+
+        /* --- 2. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2070&auto=format&fit=crop'); /* Placeholder */
+            /* REPLACE URL ABOVE WITH: comic_book_hero.PNG */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-est { margin-bottom: 20px; opacity: 0.9; }
+        
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn-hero {
+            border: 1px solid var(--white);
+            color: var(--white);
+            padding: 15px 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            background: transparent;
+        }
+
+        .btn-hero:hover { background: var(--white); color: var(--text-color); }
+
+        /* --- 3. THE CURRENT DROP --- */
+        .drop-section { padding: 80px 5%; }
+        
+        .section-header {
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card { position: relative; cursor: pointer; }
+        
+        .product-image {
+            background: #e5e5e5;
+            aspect-ratio: 2/3;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img { transform: scale(1.05); }
+
+        .sold-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-info h3 { font-family: var(--font-header); font-size: 1.2rem; margin-bottom: 5px; }
+        .product-meta { font-size: 0.9rem; color: #666; display: flex; justify-content: space-between; }
+        .price { font-weight: 600; color: var(--text-color); }
+
+        .view-all-btn {
+            display: block;
+            width: fit-content;
+            margin: 60px auto 0;
+            border-bottom: 1px solid var(--text-color);
+            padding-bottom: 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 4. HOW IT WORKS --- */
+        .process-section {
+            background: var(--bg-secondary);
+            padding: 100px 5%;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .process-item { text-align: center; padding: 20px; }
+        .icon-box { 
+            font-size: 2rem; 
+            margin-bottom: 20px; 
+            color: var(--text-color);
+        }
+        .process-item h3 { margin-bottom: 15px; font-size: 1rem; letter-spacing: 1px; }
+        .process-item p { font-size: 0.9rem; color: #555; max-width: 300px; margin: 0 auto; }
+
+        /* --- 5. THE MANIFESTO --- */
+        .manifesto-section {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        .manifesto-img {
+            flex: 1;
+            background-image: url('https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?q=80&w=2070&auto=format&fit=crop'); /* Placeholder */
+            /* REPLACE WITH YOUR PHOTO OF OWNER */
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .manifesto-text {
+            flex: 1;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--white);
+        }
+
+        .manifesto-text h2 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        .manifesto-text p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            color: #333;
+            max-width: 500px;
+        }
+
+        .signature {
+            font-family: var(--font-header);
+            font-style: italic;
+            margin-top: 20px;
+            color: var(--accent-color);
+        }
+
+        /* --- 6. ACQUISITIONS --- */
+        .acquisitions-section {
+            background-color: #0a0a0a;
+            color: var(--white);
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto 0;
+            text-align: left;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid #444;
+            color: var(--white);
+            font-family: var(--font-body);
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: var(--white); }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--white);
+            color: var(--text-color);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+        
+        .btn-submit:hover { background: #ddd; }
+
+        .alt-contact { margin-top: 20px; font-size: 0.9rem; color: #888; text-align: center;}
+
+        /* --- 7. FOOTER --- */
+        footer {
+            background: var(--white);
+            padding: 60px 5% 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 { margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 1px; }
+        .footer-col ul li { margin-bottom: 10px; font-size: 0.9rem; color: #555; }
+        
+        .bottom-bar {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            header { padding: 1rem; }
+            nav { display: none; } /* Add hamburger menu logic for real site */
+            .process-grid { grid-template-columns: 1fr; }
+            .manifesto-section { flex-direction: column; }
+            .manifesto-img { height: 400px; }
+            .manifesto-text { padding: 40px 20px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div style="width:30px; height:30px; border: 2px solid black; border-radius: 50%;"></div> 
+            
+            <span>THE CORNER BOX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#drops">Archive</a></li>
+                <li><a href="#acquisitions">Sell</a></li>
+                <li><a href="#">Journal</a></li>
+                <li><a href="#">Cart (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="hero">
+        <p class="uppercase-sub text-white hero-est">Est. 1994 • America</p>
+        <h1 class="serif-hd">HISTORY.<br>PRESERVED.</h1>
+        <p>A weekly curation of investment-grade keys and vintage grails.<br>Sourced from the vaults of Legends of Superheros.</p>
+        <button class="btn-hero">Enter The Archive</button>
+    </section>
+
+    <section class="drop-section" id="drops">
+        <div class="section-header">
+            <div>
+                <h2 class="serif-hd">THIS WEEK'S CURATION</h2>
+                <p class="uppercase-sub" style="color: #666;">Drop 001. Live Now.</p>
+            </div>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/2/23/AmazingSpider-Man300.jpg" alt="Spider-Man 300">
+                </div>
+                <div class="product-info">
+                    <h3>Amazing Spider-Man #300</h3>
+                    <div class="product-meta">
+                        <span>CGC 9.6</span>
+                        <span class="price">$850.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Hulk181.jpg" alt="Hulk 181">
+                </div>
+                <div class="product-info">
+                    <h3>Hulk #181 (Restored)</h3>
+                    <div class="product-meta">
+                        <span>Raw (Fine)</span>
+                        <span class="price">$2,200.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sold-badge">Sold Out</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/3/3a/XMen94.jpg" alt="X-Men 94" style="opacity: 0.6;">
+                </div>
+                <div class="product-info">
+                    <h3>X-Men #94</h3>
+                    <div class="product-meta">
+                        <span>CGC 4.5</span>
+                        <span class="price">$525.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sold-badge">Sold Out</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/b3/Detective_Comics_27_%28May_1939%29.jpg" alt="Detective Comics" style="opacity: 0.6;">
+                </div>
+                <div class="product-info">
+                    <h3>Batman #227</h3>
+                    <div class="product-meta">
+                        <span>Raw (VF)</span>
+                        <span class="price">$450.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="view-all-btn">View All Available Stock &rarr;</a>
+    </section>
+
+    <section class="process-section">
+        <div class="text-center">
+            <h2 class="serif-hd">THE PROCESS</h2>
+        </div>
+        <div class="process-grid">
+            <div class="process-item">
+                <div class="icon-box">&#128065;</div> <h3 class="uppercase-sub">The Curation</h3>
+                <p>Every week, we hand-select 10 specific books based on condition, scarcity, and market heat.</p>
+            </div>
+            <div class="process-item">
+                <div class="icon-box">&#128274;</div> <h3 class="uppercase-sub">The Velvet Rope</h3>
+                <p>Friday, 8 PM: Private Client access.<br>Saturday, 9 AM: Public release.<br>Join the list to beat the rush.</p>
+            </div>
+            <div class="process-item">
+                <div class="icon-box">&#11088;</div> <h3 class="uppercase-sub">The Standard</h3>
+                <p>All raw books are graded conservatively by our in-house experts with 30+ years of experience. We grade to buy, not to sell.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="manifesto-section" id="manifesto">
+        <div class="manifesto-img">
+            </div>
+        <div class="manifesto-text">
+            <p class="uppercase-sub" style="color: #888;">About Us</p>
+            <h2 class="serif-hd">32 YEARS IN THE TRADE.</h2>
+            <p>The Corner Box is the digital archive of Legends of Superheros, a staple of the New England collecting community since 1994.</p>
+            <p>In an era of algorithm-driven pricing and faceless flipping, we believe in Provenance.</p>
+            <p>We don't use stock photos. We don't guess at grades. We treat every Silver Age key and Modern variant as a piece of history that deserves to be preserved for the next generation.</p>
+            <p>Welcome to the Archive.</p>
+            <p class="signature">— The Curator</p>
+        </div>
+    </section>
+
+    <section class="acquisitions-section" id="acquisitions">
+        <h2 class="serif-hd">WE ACQUIRE COLLECTIONS.</h2>
+        <p style="max-width: 600px; margin: 10px auto; color: #ccc;">Fair market value paid for vintage collections, key issues, and investment-grade slabs. Cash or Wire.</p>
+        
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Description of Collection (Era, approximate count, key issues)"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit for Valuation</button>
+            </form>
+            <p class="alt-contact">Prefer to text? Send photos to (555) 123-4567.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 class="serif-hd" style="margin-bottom: 20px;">THE CORNER BOX</h3>
+                <p style="font-size: 0.9rem; color: #555;">New England, USA.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="uppercase-sub">Links</h4>
+                <ul>
+                    <li><a href="#">Shop The Drop</a></li>
+                    <li><a href="#">The Journal</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="uppercase-sub">Social</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">X (Twitter)</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            &copy; 2026 The Corner Box. All Rights Reserved. Powered by Legends of Superheros.
+        </div>
+    </footer>
+
+</body>
+</html>
